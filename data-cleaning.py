@@ -89,5 +89,62 @@ data_lencoder = pd.DataFrame(data)
 for col in category_features:
     data_lencoder[col] = label_encoder.fit_transform(data_lencoder[col])
 
-print(data_lencoder.head())
+# # Menghitung jumlah variabel
+# num_vars = data_lencoder.shape[1]
+ 
+# # Menentukan jumlah baris dan kolom untuk grid subplot
+# n_cols = 7  # Jumlah kolom yang diinginkan
+# n_rows = -(-num_vars // n_cols)  # Ceiling division untuk menentukan jumlah baris
+ 
+# # Membuat subplot
+# fig, axes = plt.subplots(n_rows, n_cols, figsize=(30, n_rows * 7))
+ 
+# # Flatten axes array untuk memudahkan iterasi jika diperlukan
+# axes = axes.flatten()
+ 
+# # Plot setiap variabel
+# for i, column in enumerate(data_lencoder.columns):
+#     data_lencoder[column].hist(ax=axes[i], bins=20, edgecolor='black')
+#     axes[i].set_title(column)
+#     axes[i].set_xlabel('Value')
+#     axes[i].set_ylabel('Frequency')
+ 
+# # Menghapus subplot yang tidak terpakai (jika ada)
+# for j in range(i + 1, len(axes)):
+#     fig.delaxes(axes[j])
+ 
+# # Menyesuaikan layout agar lebih rapi
+# plt.tight_layout()
+# plt.subplots_adjust(hspace=0.6, wspace=0.4)
+# plt.show()
 
+# Visualisasi distribusi data untuk beberapa kolom
+# columns_to_plot = ['age', 'TSH', 'T3', 'TT4', 'T4U', 'FTI']
+
+# plt.figure(figsize=(16,10))
+
+# for i, column in enumerate(columns_to_plot, 1):
+#     plt.subplot(2, 3, i)
+#     sns.histplot(data_lencoder[column], kde=True, bins=30)
+#     plt.title(f'Distribution of {column}')
+
+# plt.tight_layout()
+# plt.show()
+
+# Visualisasi korelasi antar variabel menggunakan heatmap
+    plt.figure(figsize=(10,8))
+    sns.heatmap(data_lencoder.corr(), annot=False, cmap='coolwarm', vmin=-1, vmax=1)
+    plt.title('Correlation Matrix')
+    plt.show()
+
+# target_corr = data_lencoder.corr()['age']
+ 
+# # (Opsional) Mengurutkan hasil korelasi berdasarkan korelasi
+# target_corr_sorted = target_corr.abs().sort_values(ascending=False)
+ 
+# plt.figure(figsize=(10, 6))
+# target_corr_sorted.plot(kind='bar')
+# plt.title(f'Correlation with age')
+# plt.xlabel('Variables')
+# plt.ylabel('Correlation Coefficient')
+# plt.show()
